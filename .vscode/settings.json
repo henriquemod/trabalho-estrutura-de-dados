@@ -1,0 +1,6 @@
+{
+ "files.associations": {
+  "ncurses.h": "c",
+  "flight.h": "c"
+ }
+}
