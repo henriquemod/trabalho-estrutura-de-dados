@@ -179,3 +179,14 @@ void print_menu_with_sub_options(char *title, char *options[], int size, char *s
     print_options_with_sub_options(options, size, subOptions, sub_options_size, index);
     print_bottom_menu();
 }
+
+void print_plane_line(struct Plane plane)
+{
+    printf("║  %s - %s", plane.model, plane.manufacturer);
+    int spaces = SCREEN_WIDTH - strlen(plane.model) - strlen(plane.manufacturer) - 5;
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
