@@ -183,7 +183,29 @@ void print_menu_with_sub_options(char *title, char *options[], int size, char *s
 void print_plane_line(struct Plane plane)
 {
     printf("║  %s - %s", plane.model, plane.manufacturer);
-    int spaces = SCREEN_WIDTH - strlen(plane.model) - strlen(plane.manufacturer) - 5;
+    int spaces = SCREEN_WIDTH - strlen(plane.model) - strlen(plane.manufacturer) - 7;
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
+
+void print_ticket_line(struct Ticket ticket)
+{
+    printf("║  %s - Portão: %s", ticket.ticketNumber, ticket.flightGate);
+    int spaces = SCREEN_WIDTH - strlen(ticket.ticketNumber) - strlen(ticket.flightGate) - 12;
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
+
+void print_no_results()
+{
+    printf("║  Nenhum resultado encontrado");
+    int spaces = SCREEN_WIDTH - 31;
     for (int j = 0; j < spaces; j++)
     {
         printf(" ");

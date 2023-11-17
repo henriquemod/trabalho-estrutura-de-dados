@@ -54,10 +54,10 @@ int main()
             renderPlanesMenu(planes);
             break;
         case 2:
-            renderFlightsMenu();
+            renderFlightsMenu(tickets, numTickets);
             break;
         case 3:
-            renderTicketsMenu();
+            renderTicketsMenu(tickets, numTickets);
             break;
         case 9:
             exit = true;
