@@ -1,6 +1,12 @@
 #ifndef PLANE_H
 #define PLANE_H
 
+struct Planes
+{
+    struct Plane *planes;
+    void (*delete)(int index);
+};
+
 struct Plane
 {
     char model[100];
@@ -81,6 +87,34 @@ void createPlane(struct Plane *planes, int size)
     system(CLEAR_SCREEN);
 
     planes[size - 1] = *plane;
+}
+
+bool remove_plane(struct Plane *planes, int planes_size)
+{
+    system(CLEAR_SCREEN);
+
+    printf("Remover aeronave \n\n");
+
+    printf("Modelo: ");
+    char model[100];
+    scanf("%[^\n]", model);
+    getchar();
+
+    bool found = false;
+    for (int i = 0; i < planes_size; i++)
+    {
+        if (strcmp(planes[i].model, model) == 0)
+        {
+            found = true;
+            for (int j = i; j < planes_size - 1; j++)
+            {
+                planes[j] = planes[j + 1];
+            }
+            break;
+        }
+    }
+
+    return found;
 }
 
 #endif
