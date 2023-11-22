@@ -8,16 +8,9 @@ struct Ticket
     int flightGate;
 };
 
-struct Ticket *getTickets()
+struct Ticket *getTickets(struct Ticket *tickets)
 {
-    struct Ticket *tickets = NULL;
-    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * 0);
-    if (tickets == NULL)
-    {
-        printf("Memory allocation failed\n");
-        exit(1);
-    }
-    return tickets;
+    // No mock data for tickets yet
 }
 
 void createTicket(struct Ticket *tickets, int size)
