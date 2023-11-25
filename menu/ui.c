@@ -204,8 +204,11 @@ void print_flight_line(struct Flight flight)
 
 void print_ticket_line(struct Ticket ticket)
 {
-    printf("║  %s - Portão: %s", ticket.ticketNumber, ticket.flightGate);
-    int spaces = SCREEN_WIDTH - strlen(ticket.ticketNumber) - strlen(ticket.flightGate) - 12;
+    char ticketNumber[10], flightGate[10];
+    snprintf(ticketNumber, sizeof(ticketNumber), "%d", ticket.ticketNumber);
+    snprintf(flightGate, sizeof(flightGate), "%d", ticket.flightGate);
+    printf("║  %d - Portão: %d", ticket.ticketNumber, ticket.flightGate);
+    int spaces = SCREEN_WIDTH - strlen(ticketNumber) - strlen(flightGate) - 15;
     for (int j = 0; j < spaces; j++)
     {
         printf(" ");

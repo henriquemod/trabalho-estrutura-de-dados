@@ -13,33 +13,59 @@ struct Ticket *getTickets(struct Ticket *tickets)
     // No mock data for tickets yet
 }
 
-void createTicket(struct Ticket *tickets, int size)
+struct Ticket *create_ticket(struct Flight *flights, int flights_size)
 {
-    system(CLEAR_SCREEN);
+    struct Ticket *ticket = (struct Ticket *)malloc(sizeof(struct Ticket));
 
-    struct Ticket *ticket = NULL;
-    ticket = (struct Ticket *)malloc(sizeof(struct Ticket));
     if (ticket == NULL)
     {
         printf("Memory allocation failed\n");
         exit(1);
     }
 
-    printf("Cadastro de passagem aérea \n\n");
-
-    printf("Numero da passagem: ");
-    scanf("%[^\n]", ticket->ticketNumber);
+    printf("Cadastro de passagem \n\n");
+    printf("Número da passagem: ");
+    scanf("%d", &ticket->ticketNumber);
     getchar();
 
-    system(CLEAR_SCREEN);
-    printf("Passagem confirmada!\n\n");
-    printf("Numero da passagem: %s\n", ticket->ticketNumber);
-    printf("Numero do voo: %d\n", ticket->flight.flightNumber);
-    printf("\n\nPressione ENTER para retornar ao continuar...");
+    int flightIndex;
+    printf("Selecione um voo: \n");
+    for (int i = 0; i < flights_size; i++)
+    {
+        printf("%d - %d\n", i + 1, flights[i].flightNumber);
+    }
+    printf("Escolha uma opção: ");
+    scanf("%d", &flightIndex);
     getchar();
-    system(CLEAR_SCREEN);
 
-    tickets[size - 1] = *ticket;
+    ticket->flight = flights[flightIndex - 1];
+
+    printf("Portão de embarque: ");
+    scanf("%d", &ticket->flightGate);
+    getchar();
+
+    return ticket;
+}
+
+bool remove_ticket(struct Ticket *tickets, int tickets_size)
+{
+    int ticketNumber;
+    printf("Digite o número da passagem: ");
+    scanf("%d", &ticketNumber);
+    getchar();
+
+    for (int i = 0; i < tickets_size; i++)
+    {
+        if (tickets[i].ticketNumber == ticketNumber)
+        {
+            for (int j = i; j < tickets_size - 1; j++)
+            {
+                tickets[j] = tickets[j + 1];
+            }
+            return true;
+        }
+    }
+    return false;
 }
 
 #endif
