@@ -1,6 +1,16 @@
 {
  "files.associations": {
   "ncurses.h": "c",
-  "flight.h": "c"
+  "flight.h": "c",
+  "atomic": "c",
+  "chrono": "c",
+  "compare": "c",
+  "cstdint": "c",
+  "array": "c",
+  "string_view": "c",
+  "format": "c",
+  "initializer_list": "c",
+  "span": "c",
+  "valarray": "c"
  }
 }

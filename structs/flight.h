@@ -9,16 +9,9 @@ struct Flight
     char flightTime[10];
 };
 
-struct Flight *getFlights()
+struct Flight *getFlights(struct Flight *flights)
 {
-    struct Flight *flights = NULL;
-    flights = (struct Flight *)malloc(sizeof(struct Flight) * 0);
-    if (flights == NULL)
-    {
-        printf("Memory allocation failed\n");
-        exit(1);
-    }
-    return flights;
+    // No mock data for flights yet
 }
 
 #endif

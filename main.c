@@ -21,18 +21,64 @@
 #include "menu/tickets.c"
 #include "menu/flights.c"
 
+typedef void (*Callback)(char entry[10]);
+typedef void (*ReallocCallback)(struct Plane *plane);
+
 int main()
 {
-    struct Plane *planes = getPlanes();
-    struct Ticket *tickets = getTickets();
-    struct Flight *flights = getFlights();
-
     int numPlanes = INITIAL_PLANES_SIZE;
     int numTickets = INITIAL_TICKETS_SIZE;
     int numFlights = INITIAL_FLIGHTS_SIZE;
-    bool exit = false;
 
-    while (exit == false)
+    struct Plane *planes = NULL;
+    struct Ticket *tickets = NULL;
+    struct Flight *flights = NULL;
+
+    planes = (struct Plane *)malloc(sizeof(struct Plane) * numPlanes);
+    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * numTickets);
+    flights = (struct Flight *)malloc(sizeof(struct Flight) * numFlights);
+
+    if (planes == NULL || tickets == NULL || flights == NULL)
+    {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+
+    getPlanes(planes);
+    getTickets(tickets);
+    getFlights(flights);
+
+    void remove_callback(char entry[10])
+    {
+        if (strcmp(entry, "plane") == 0)
+        {
+            numPlanes--;
+            planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * numPlanes);
+        }
+        if (strcmp(entry, "ticket") == 0)
+        {
+            numTickets--;
+            tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * numTickets);
+        }
+        if (strcmp(entry, "flight") == 0)
+        {
+            numFlights--;
+            flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * numFlights);
+        }
+    }
+
+    void realloc_callback(struct Plane * new_plane)
+    {
+        numPlanes++;
+        planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * numPlanes);
+        struct Plane planeToInsert = *new_plane;
+        free(new_plane);
+        planes[numPlanes - 1] = planeToInsert;
+    }
+
+    bool quit = false;
+
+    while (quit == false)
     {
         system(CLEAR_SCREEN);
         char *options[] = {
@@ -49,7 +95,7 @@ int main()
         switch (option)
         {
         case 1:
-            renderPlanesMenu(planes, numPlanes);
+            renderPlanesMenu(planes, numPlanes, remove_callback, realloc_callback);
             break;
         case 2:
             renderFlightsMenu(tickets, numTickets);
@@ -58,7 +104,7 @@ int main()
             renderTicketsMenu(tickets, numTickets);
             break;
         case 9:
-            exit = true;
+            quit = true;
             break;
         default:
             printf("Opção inválida\n");
