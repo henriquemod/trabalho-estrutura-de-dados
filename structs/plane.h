@@ -83,4 +83,48 @@ void createPlane(struct Plane *planes, int size)
     planes[size - 1] = *plane;
 }
 
+void remove_plane(struct Plane *planes, int *planesSize)
+{
+    system(CLEAR_SCREEN);
+
+    printf("Remover aeronave \n\n");
+
+    printf("Modelo: ");
+    char model[100];
+    scanf("%[^\n]", model);
+    getchar();
+
+    bool found = false;
+    for (int i = 0; i < planesSize; i++)
+    {
+        if (strcmp(planes[i].model, model) == 0)
+        {
+            found = true;
+            for (int j = i; j < planesSize - 1; j++)
+            {
+                planes[j] = planes[j + 1];
+            }
+            break;
+        }
+    }
+
+    if (found)
+    {
+        system(CLEAR_SCREEN);
+        printf("Aeronave removida com sucesso\n\n");
+        printf("\n\nPressione ENTER para retornar ao continuar...");
+        getchar();
+        planesSize--;
+        system(CLEAR_SCREEN);
+    }
+    else
+    {
+        system(CLEAR_SCREEN);
+        printf("Aeronave não encontrada\n\n");
+        printf("\n\nPressione ENTER para retornar ao continuar...");
+        getchar();
+        system(CLEAR_SCREEN);
+    }
+}
+
 #endif

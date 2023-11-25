@@ -25,7 +25,6 @@ int main()
 {
     struct Plane *planes = getPlanes();
     struct Ticket *tickets = getTickets();
-    printf("| Menu Principal\n");
     struct Flight *flights = getFlights();
 
     int numPlanes = INITIAL_PLANES_SIZE;
@@ -33,10 +32,9 @@ int main()
     int numFlights = INITIAL_FLIGHTS_SIZE;
     bool exit = false;
 
-    system(CLEAR_SCREEN);
-
     while (exit == false)
     {
+        system(CLEAR_SCREEN);
         char *options[] = {
             "Aeronaves",
             "Voos",
@@ -51,7 +49,7 @@ int main()
         switch (option)
         {
         case 1:
-            renderPlanesMenu(planes);
+            renderPlanesMenu(planes, numPlanes);
             break;
         case 2:
             renderFlightsMenu(tickets, numTickets);

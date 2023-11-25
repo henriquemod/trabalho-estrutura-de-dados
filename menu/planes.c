@@ -1,4 +1,4 @@
-void renderPlanesMenu(struct Plane *planes)
+void renderPlanesMenu(struct Plane *planes, int *planesSize)
 {
     char *options[] = {
         "Aeronaves",
@@ -38,13 +38,14 @@ void renderPlanesMenu(struct Plane *planes)
         // renderFlightsMenu();
         break;
     case 3:
-        // renderTicketsMenu();
+        remove_plane(planes, planesSize);
         break;
     case 4:
         system(CLEAR_SCREEN);
         return;
         break;
     case 9:
+        system(CLEAR_SCREEN);
         exit(0);
         break;
     default:
