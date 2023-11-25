@@ -3,9 +3,10 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define INITIAL_PLANES_SIZE 3
+#define INITIAL_PLANES_SIZE 0
 #define INITIAL_TICKETS_SIZE 0
 #define INITIAL_FLIGHTS_SIZE 0
+#define MOCKED_PLANES_SIZE 3
 #define DEVELOPMENT true
 
 #ifdef _WIN32
@@ -50,9 +51,11 @@ int main()
 
     if (DEVELOPMENT == true)
     {
+        planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * MOCKED_PLANES_SIZE);
         struct Plane *planes_mock = get_planes();
-        memcpy(planes, planes_mock, sizeof(struct Plane) * 3);
+        memcpy(planes, planes_mock, sizeof(struct Plane) * MOCKED_PLANES_SIZE);
         free(planes_mock);
+        num_planes_available = MOCKED_PLANES_SIZE;
     }
 
     void realloc_planes_callback(struct Plane * new_plane)
