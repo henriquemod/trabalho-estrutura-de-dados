@@ -1,4 +1,7 @@
-void renderFlightsMenu(struct Ticket *tickets, int tickets_size)
+typedef void (*Callback)(char entry[10]);
+typedef void (*ReallocFlightCallback)(struct Flight *flight);
+
+void renderFlightsMenu(struct Plane *planes, int planes_size, struct Flight *flights, int flight_size, Callback remove_callback, ReallocFlightCallback realloc_callback)
 {
     system(CLEAR_SCREEN);
     char *options[] = {
@@ -24,17 +27,17 @@ void renderFlightsMenu(struct Ticket *tickets, int tickets_size)
     {
     case 1:
         system(CLEAR_SCREEN);
-        print_menu_header("Aeronaves - Lista");
-        if (tickets_size == 0)
+        print_menu_header("Voos - Lista");
+        if (flight_size == 0)
         {
             print_no_results();
         }
         else
         {
 
-            for (int i = 0; i < tickets_size; i++)
+            for (int i = 0; i < flight_size; i++)
             {
-                print_ticket_line(tickets[i]);
+                print_flight_line(flights[i]);
             }
         }
         print_bottom_menu();
@@ -44,10 +47,40 @@ void renderFlightsMenu(struct Ticket *tickets, int tickets_size)
         getchar();
         break;
     case 2:
-        // renderFlightsMenu();
+        system(CLEAR_SCREEN);
+        struct Flight *new_flight = create_flight(planes, planes_size);
+        realloc_callback(new_flight);
         break;
     case 3:
-        // renderTicketsMenu();
+        system(CLEAR_SCREEN);
+        bool res = remove_flight(flights, flight_size);
+        if (res)
+        {
+            system(CLEAR_SCREEN);
+            remove_callback("flight");
+            flight_size--;
+            if (flight_size == 0)
+            {
+                flights = NULL;
+            }
+            else
+            {
+
+                flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * (flight_size));
+            }
+            printf("Voo removido com sucesso\n\n");
+            printf("\n\nPressione ENTER para retornar ao continuar...");
+            getchar();
+            system(CLEAR_SCREEN);
+        }
+        else
+        {
+            system(CLEAR_SCREEN);
+            printf("Voo não encontrado\n\n");
+            printf("\n\nPressione ENTER para retornar ao continuar...");
+            getchar();
+            system(CLEAR_SCREEN);
+        }
         break;
     case 4:
         system(CLEAR_SCREEN);

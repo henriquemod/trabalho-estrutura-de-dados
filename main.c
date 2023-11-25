@@ -23,20 +23,21 @@
 
 typedef void (*Callback)(char entry[10]);
 typedef void (*ReallocCallback)(struct Plane *plane);
+typedef void (*ReallocFlightCallback)(struct Flight *flight);
 
 int main()
 {
     int numPlanes = INITIAL_PLANES_SIZE;
-    int numTickets = INITIAL_TICKETS_SIZE;
     int numFlights = INITIAL_FLIGHTS_SIZE;
+    int numTickets = INITIAL_TICKETS_SIZE;
 
     struct Plane *planes = NULL;
-    struct Ticket *tickets = NULL;
     struct Flight *flights = NULL;
+    struct Ticket *tickets = NULL;
 
     planes = (struct Plane *)malloc(sizeof(struct Plane) * numPlanes);
-    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * numTickets);
     flights = (struct Flight *)malloc(sizeof(struct Flight) * numFlights);
+    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * numTickets);
 
     if (planes == NULL || tickets == NULL || flights == NULL)
     {
@@ -76,6 +77,15 @@ int main()
         planes[numPlanes - 1] = planeToInsert;
     }
 
+    void realloc_flights_callback(struct Flight * new_flight)
+    {
+        numFlights++;
+        flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * numFlights);
+        struct Flight flightToInsert = *new_flight;
+        free(new_flight);
+        flights[numFlights - 1] = flightToInsert;
+    }
+
     bool quit = false;
 
     while (quit == false)
@@ -98,7 +108,7 @@ int main()
             renderPlanesMenu(planes, numPlanes, remove_callback, realloc_callback);
             break;
         case 2:
-            renderFlightsMenu(tickets, numTickets);
+            renderFlightsMenu(planes, numPlanes, flights, numFlights, remove_callback, realloc_flights_callback);
             break;
         case 3:
             renderTicketsMenu(tickets, numTickets);

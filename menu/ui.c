@@ -191,6 +191,17 @@ void print_plane_line(struct Plane plane)
     printf("║▒▒\n");
 }
 
+void print_flight_line(struct Flight flight)
+{
+    printf("║  %d - %s", flight.flightNumber, flight.plane.model);
+    int spaces = SCREEN_WIDTH - strlen(flight.plane.model) - 8;
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
+
 void print_ticket_line(struct Ticket ticket)
 {
     printf("║  %s - Portão: %s", ticket.ticketNumber, ticket.flightGate);
