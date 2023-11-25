@@ -8,11 +8,6 @@ struct Ticket
     int flightGate;
 };
 
-struct Ticket *getTickets(struct Ticket *tickets)
-{
-    // No mock data for tickets yet
-}
-
 struct Ticket *create_ticket(struct Flight *flights, int flights_size)
 {
     struct Ticket *ticket = (struct Ticket *)malloc(sizeof(struct Ticket));

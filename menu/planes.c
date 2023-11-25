@@ -1,23 +1,10 @@
 typedef void (*Callback)(char entry[10]);
 typedef void (*ReallocCallback)(struct Plane *plane);
 
-void renderPlanesMenu(struct Plane *planes, int planes_size, Callback remove_callback, ReallocCallback realloc_callback)
+void render_planes_menu(struct Plane *planes, int planes_size, Callback remove_callback, ReallocCallback realloc_callback)
 {
-    char *options[] = {
-        "Aeronaves",
-        "Voos",
-        "Passagens",
-    };
-    char *subOptions[] = {
-        "Listar",
-        "Criar",
-        "Remover",
-        "Voltar",
-    };
-    int size = sizeof(options) / sizeof(options[0]);
-    int sub_options_size = sizeof(subOptions) / sizeof(subOptions[0]);
     system(CLEAR_SCREEN);
-    print_menu_with_sub_options("UniVoos - Aeronaves", options, size, subOptions, sub_options_size, 0);
+    print_menu_with_sub_options("UniVoos - Aeronaves", 0);
     printf("Escolha uma opção: ");
     int option;
     scanf("%d", &option);
@@ -27,6 +14,7 @@ void renderPlanesMenu(struct Plane *planes, int planes_size, Callback remove_cal
     case 1:
         system(CLEAR_SCREEN);
         print_menu_header("Aeronaves - Lista");
+        print_blank_line();
         for (int i = 0; i < planes_size; i++)
         {
             print_plane_line(planes[i]);

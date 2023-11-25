@@ -1,4 +1,38 @@
-#define SCREEN_WIDTH 80
+#define SCREEN_WIDTH 100
+
+char *options[] = {
+    "Aeronaves",
+    "Voos",
+    "Passagens",
+};
+char *subOptions[] = {
+    "Listar",
+    "Criar",
+    "Remover",
+    "Voltar",
+};
+int size = sizeof(options) / sizeof(options[0]);
+int sub_options_size = sizeof(subOptions) / sizeof(subOptions[0]);
+
+void print_blank_line()
+{
+    printf("║");
+    int spaces = SCREEN_WIDTH - 2;
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
+
+void end_of_line(int spaces)
+{
+    for (int j = 0; j < spaces; j++)
+    {
+        printf(" ");
+    }
+    printf("║▒▒\n");
+}
 
 void print_menu_header(char *title)
 {
@@ -77,11 +111,7 @@ void printOptions(char *options[], int size)
     {
         printf("║  %d - %s", i + 1, options[i]);
         int spaces = SCREEN_WIDTH - strlen(options[i]) - 8;
-        for (int j = 0; j < spaces; j++)
-        {
-            printf(" ");
-        }
-        printf("║▒▒\n");
+        end_of_line(spaces);
     }
 }
 
@@ -93,20 +123,12 @@ void print_options_with_sub_options(char *options[], int size, char *subOptions[
         {
             printf("║  ♦ - %s", options[i]);
             int spaces = SCREEN_WIDTH - strlen(options[i]) - 8;
-            for (int j = 0; j < spaces; j++)
-            {
-                printf(" ");
-            }
-            printf("║▒▒\n");
+            end_of_line(spaces);
             for (int j = 0; j < sub_options_size; j++)
             {
                 printf("║    %d - %s", j + 1, subOptions[j]);
                 int spaces = SCREEN_WIDTH - strlen(subOptions[j]) - 10;
-                for (int k = 0; k < spaces; k++)
-                {
-                    printf(" ");
-                }
-                printf("║▒▒\n");
+                end_of_line(spaces);
             }
         }
         else
@@ -127,27 +149,15 @@ void print_bottom_menu()
 {
     printf("║");
     int spaces = SCREEN_WIDTH - 2;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 
     printf("║  9 - Sair");
     spaces = SCREEN_WIDTH - 12;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 
     printf("║");
     spaces = SCREEN_WIDTH - 2;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 
     printf("╚");
     spaces = SCREEN_WIDTH - 2;
@@ -166,16 +176,18 @@ void print_bottom_menu()
     printf("▒▒\n\n");
 }
 
-void print_menu(char *title, char *options[], int size)
+void print_menu(char *title)
 {
     print_menu_header(title);
+    print_blank_line();
     printOptions(options, size);
     print_bottom_menu();
 }
 
-void print_menu_with_sub_options(char *title, char *options[], int size, char *subOptions[], int sub_options_size, int index)
+void print_menu_with_sub_options(char *title, int index)
 {
     print_menu_header(title);
+    print_blank_line();
     print_options_with_sub_options(options, size, subOptions, sub_options_size, index);
     print_bottom_menu();
 }
@@ -184,22 +196,24 @@ void print_plane_line(struct Plane plane)
 {
     printf("║  %s - %s", plane.model, plane.manufacturer);
     int spaces = SCREEN_WIDTH - strlen(plane.model) - strlen(plane.manufacturer) - 7;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
+
+    char passengers_capacity[10], speed[10], altitude[10];
+    snprintf(passengers_capacity, sizeof(passengers_capacity), "%d", plane.passengers_capacity);
+    snprintf(speed, sizeof(speed), "%.2f", plane.speed);
+    snprintf(altitude, sizeof(altitude), "%.2f", plane.altitude);
+
+    printf("║\t Capacidade: %d pessoas | Velocidade: %.2fkm/h | Altitude: %.2fm", plane.passengers_capacity, plane.speed, plane.altitude);
+    spaces = SCREEN_WIDTH - 59 - strlen(passengers_capacity) - strlen(speed) - strlen(altitude);
+    end_of_line(spaces);
+    print_blank_line();
 }
 
 void print_flight_line(struct Flight flight)
 {
     printf("║  %d - %s", flight.flightNumber, flight.plane.model);
     int spaces = SCREEN_WIDTH - strlen(flight.plane.model) - 8;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 }
 
 void print_ticket_line(struct Ticket ticket)
@@ -209,20 +223,12 @@ void print_ticket_line(struct Ticket ticket)
     snprintf(flightGate, sizeof(flightGate), "%d", ticket.flightGate);
     printf("║  %d - Portão: %d", ticket.ticketNumber, ticket.flightGate);
     int spaces = SCREEN_WIDTH - strlen(ticketNumber) - strlen(flightGate) - 15;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 }
 
 void print_no_results()
 {
     printf("║  Nenhum resultado encontrado");
     int spaces = SCREEN_WIDTH - 31;
-    for (int j = 0; j < spaces; j++)
-    {
-        printf(" ");
-    }
-    printf("║▒▒\n");
+    end_of_line(spaces);
 }

@@ -9,11 +9,6 @@ struct Flight
     char flightTime[10];
 };
 
-struct Flight *getFlights(struct Flight *flights)
-{
-    // No mock data for flights yet
-}
-
 struct Flight *create_flight(struct Plane *planes, int planes_size)
 {
     struct Flight *flight = (struct Flight *)malloc(sizeof(struct Flight));

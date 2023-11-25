@@ -1,12 +1,6 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-struct Planes
-{
-    struct Plane *planes;
-    void (*delete)(int index);
-};
-
 struct Plane
 {
     char model[100];
@@ -18,17 +12,6 @@ struct Plane
     float altitude;
     float engine;
 };
-
-void *getPlanes(struct Plane *planes)
-{
-    struct Plane plane_1 = {"Boeing 747", "Boeing", 416, 70.6, 19.4, 988, 13100, 4};
-    struct Plane plane_2 = {"Airbus A380", "Airbus", 853, 72.7, 24.1, 945, 13100, 4};
-    struct Plane plane_3 = {"Boeing 777", "Boeing", 550, 73.9, 18.5, 950, 13100, 4};
-
-    planes[0] = plane_1;
-    planes[1] = plane_2;
-    planes[2] = plane_3;
-}
 
 struct Plane *create_plane()
 {
@@ -73,7 +56,23 @@ struct Plane *create_plane()
     getchar();
 
     return plane;
-}
+};
+
+struct Plane *get_planes()
+{
+    struct Plane *planes = NULL;
+    planes = (struct Plane *)malloc(sizeof(struct Plane) * 3);
+
+    struct Plane plane_1 = {"Boeing 747", "Boeing", 416, 70.6, 19.4, 988, 13100, 4};
+    struct Plane plane_2 = {"Airbus A380", "Airbus", 853, 72.7, 24.1, 945, 13100, 4};
+    struct Plane plane_3 = {"Boeing 777", "Boeing", 550, 73.9, 18.5, 950, 13100, 4};
+
+    planes[0] = plane_1;
+    planes[1] = plane_2;
+    planes[2] = plane_3;
+
+    return planes;
+};
 
 bool remove_plane(struct Plane *planes, int planes_size)
 {
@@ -101,6 +100,6 @@ bool remove_plane(struct Plane *planes, int planes_size)
     }
 
     return found;
-}
+};
 
 #endif

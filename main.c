@@ -6,6 +6,7 @@
 #define INITIAL_PLANES_SIZE 3
 #define INITIAL_TICKETS_SIZE 0
 #define INITIAL_FLIGHTS_SIZE 0
+#define DEVELOPMENT true
 
 #ifdef _WIN32
 #define CLEAR_SCREEN "cls"
@@ -21,19 +22,25 @@
 #include "menu/tickets.c"
 #include "menu/flights.c"
 
+bool quit;
+int num_planes_available;
+int num_flights_available;
+int num_tickets_available;
+
+struct Plane *planes = NULL;
+struct Flight *flights = NULL;
+struct Ticket *tickets = NULL;
+
 int main()
 {
-    int numPlanes = INITIAL_PLANES_SIZE;
-    int numFlights = INITIAL_FLIGHTS_SIZE;
-    int numTickets = INITIAL_TICKETS_SIZE;
+    quit = false;
+    num_planes_available = INITIAL_PLANES_SIZE;
+    num_flights_available = INITIAL_FLIGHTS_SIZE;
+    num_tickets_available = INITIAL_TICKETS_SIZE;
 
-    struct Plane *planes = NULL;
-    struct Flight *flights = NULL;
-    struct Ticket *tickets = NULL;
-
-    planes = (struct Plane *)malloc(sizeof(struct Plane) * numPlanes);
-    flights = (struct Flight *)malloc(sizeof(struct Flight) * numFlights);
-    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * numTickets);
+    planes = (struct Plane *)malloc(sizeof(struct Plane) * num_planes_available);
+    flights = (struct Flight *)malloc(sizeof(struct Flight) * num_flights_available);
+    tickets = (struct Ticket *)malloc(sizeof(struct Ticket) * num_tickets_available);
 
     if (planes == NULL || tickets == NULL || flights == NULL)
     {
@@ -41,88 +48,79 @@ int main()
         exit(1);
     }
 
-    getPlanes(planes);
-    getTickets(tickets);
-    getFlights(flights);
+    if (DEVELOPMENT == true)
+    {
+        struct Plane *planes_mock = get_planes();
+        memcpy(planes, planes_mock, sizeof(struct Plane) * 3);
+        free(planes_mock);
+    }
+
+    void realloc_planes_callback(struct Plane * new_plane)
+    {
+        num_planes_available++;
+        planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * num_planes_available);
+        struct Plane planeToInsert = *new_plane;
+        free(new_plane);
+        planes[num_planes_available - 1] = planeToInsert;
+    }
+
+    void realloc_flights_callback(struct Flight * new_flight)
+    {
+        num_flights_available++;
+        flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * num_flights_available);
+        struct Flight flightToInsert = *new_flight;
+        free(new_flight);
+        flights[num_flights_available - 1] = flightToInsert;
+    }
+
+    void realloc_tickets_callback(struct Ticket * new_ticket)
+    {
+        num_tickets_available++;
+        tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * num_tickets_available);
+        struct Ticket ticketToInsert = *new_ticket;
+        free(new_ticket);
+        tickets[num_tickets_available - 1] = ticketToInsert;
+    }
 
     void remove_callback(char entry[10])
     {
         if (strcmp(entry, "plane") == 0)
         {
-            numPlanes--;
-            planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * numPlanes);
+            num_planes_available--;
+            planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * num_planes_available);
         }
         if (strcmp(entry, "ticket") == 0)
         {
-            numTickets--;
-            tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * numTickets);
+            num_tickets_available--;
+            tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * num_tickets_available);
         }
         if (strcmp(entry, "flight") == 0)
         {
-            numFlights--;
-            flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * numFlights);
+            num_flights_available--;
+            flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * num_flights_available);
         }
     }
-
-    void realloc_planes_callback(struct Plane * new_plane)
-    {
-        numPlanes++;
-        planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * numPlanes);
-        struct Plane planeToInsert = *new_plane;
-        free(new_plane);
-        planes[numPlanes - 1] = planeToInsert;
-    }
-
-    void realloc_flights_callback(struct Flight * new_flight)
-    {
-        numFlights++;
-        flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * numFlights);
-        struct Flight flightToInsert = *new_flight;
-        free(new_flight);
-        flights[numFlights - 1] = flightToInsert;
-    }
-
-    void realloc_tickets_callback(struct Ticket * new_ticket)
-    {
-        numTickets++;
-        tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * numTickets);
-        struct Ticket ticketToInsert = *new_ticket;
-        free(new_ticket);
-        tickets[numTickets - 1] = ticketToInsert;
-    }
-
-    bool quit = false;
 
     while (quit == false)
     {
         system(CLEAR_SCREEN);
-        char *options[] = {
-            "Aeronaves",
-            "Voos",
-            "Passagens",
-        };
-        int size = sizeof(options) / sizeof(options[0]);
-        print_menu("UniVoos - Menu Principal", options, size);
+        print_menu("UniVoos - Menu Principal");
         printf("Escolha uma opção: ");
         int option;
         scanf("%d", &option);
-        getchar();
         switch (option)
         {
         case 1:
-            renderPlanesMenu(planes, numPlanes, remove_callback, realloc_planes_callback);
+            render_planes_menu(planes, num_planes_available, remove_callback, realloc_planes_callback);
             break;
         case 2:
-            renderFlightsMenu(planes, numPlanes, flights, numFlights, remove_callback, realloc_flights_callback);
+            render_flights_menu(planes, num_planes_available, flights, num_flights_available, remove_callback, realloc_flights_callback);
             break;
         case 3:
-            renderTicketsMenu(flights, numFlights, tickets, numTickets, remove_callback, realloc_tickets_callback);
+            render_tickets_menu(flights, num_flights_available, tickets, num_tickets_available, remove_callback, realloc_tickets_callback);
             break;
         case 9:
             quit = true;
-            break;
-        default:
-            printf("Opção inválida\n");
             break;
         }
     }
