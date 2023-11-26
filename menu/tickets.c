@@ -7,7 +7,6 @@ void render_tickets_menu(struct Flight *flights, int flights_size, struct Ticket
     system(CLEAR_SCREEN);
     print_menu_with_sub_options("UniVoos - Passagens", 2);
     printf("Escolha uma opção: ");
-    printf("Escolha uma opção: ");
     int option;
     scanf("%d", &option);
     getchar();
@@ -53,7 +52,7 @@ void render_tickets_menu(struct Flight *flights, int flights_size, struct Ticket
         if (res)
         {
             system(CLEAR_SCREEN);
-            remove_callback("plane");
+            remove_callback("ticket");
             tickets_size--;
             if (tickets_size == 0)
             {
@@ -61,7 +60,6 @@ void render_tickets_menu(struct Flight *flights, int flights_size, struct Ticket
             }
             else
             {
-
                 tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * (tickets_size));
             }
             printf("Passagem removida com sucesso\n\n");

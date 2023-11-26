@@ -7,6 +7,8 @@
 #define INITIAL_TICKETS_SIZE 0
 #define INITIAL_FLIGHTS_SIZE 0
 #define MOCKED_PLANES_SIZE 3
+#define MOCKED_FLIGHTS_SIZE 5
+#define MOCKED_TICKETS_SIZE 5
 #define DEVELOPMENT true
 
 #ifdef _WIN32
@@ -56,6 +58,18 @@ int main()
         memcpy(planes, planes_mock, sizeof(struct Plane) * MOCKED_PLANES_SIZE);
         free(planes_mock);
         num_planes_available = MOCKED_PLANES_SIZE;
+
+        flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * MOCKED_FLIGHTS_SIZE);
+        struct Flight *flights_mock = get_flights(planes[0]);
+        memcpy(flights, flights_mock, sizeof(struct Flight) * MOCKED_FLIGHTS_SIZE);
+        free(flights_mock);
+        num_flights_available = MOCKED_FLIGHTS_SIZE;
+
+        tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * MOCKED_TICKETS_SIZE);
+        struct Ticket *tickets_mock = get_tickets(flights[0]);
+        memcpy(tickets, tickets_mock, sizeof(struct Ticket) * MOCKED_TICKETS_SIZE);
+        free(tickets_mock);
+        num_tickets_available = MOCKED_TICKETS_SIZE;
     }
 
     void realloc_planes_callback(struct Plane * new_plane)

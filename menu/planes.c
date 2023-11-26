@@ -45,7 +45,6 @@ void render_planes_menu(struct Plane *planes, int planes_size, Callback remove_c
             }
             else
             {
-
                 planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * (planes_size));
             }
             printf("Aeronave removida com sucesso\n\n");
