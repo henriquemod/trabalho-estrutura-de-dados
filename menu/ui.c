@@ -211,8 +211,10 @@ void print_plane_line(struct Plane plane)
 
 void print_flight_line(struct Flight flight)
 {
+    char flightNumber[10];
+    snprintf(flightNumber, sizeof(flightNumber), "%d", flight.flightNumber);
     printf("║  N. Voo: %d - Aeronave: %s", flight.flightNumber, flight.plane.model);
-    int spaces = SCREEN_WIDTH - strlen(flight.plane.model) - 26;
+    int spaces = SCREEN_WIDTH - strlen(flight.plane.model) - strlen(flightNumber) - 25;
     end_of_line(spaces);
 
     printf("║\t Data: %s | Horário: %s", flight.flightDate, flight.flightTime);
@@ -223,11 +225,11 @@ void print_flight_line(struct Flight flight)
 
 void print_ticket_line(struct Ticket ticket)
 {
-    char ticketNumber[10], flightGate[10];
+    char ticketNumber[10], flightNumber[10];
     snprintf(ticketNumber, sizeof(ticketNumber), "%d", ticket.ticketNumber);
-    snprintf(flightGate, sizeof(flightGate), "%d", ticket.flightGate);
-    printf("║ N: %d - N. Voo: %d - Portão: %d - Aeronave: %s - Data: %s - %s", ticket.ticketNumber, ticket.flight.flightNumber, ticket.flightGate, ticket.flight.plane.model, ticket.flight.flightDate, ticket.flight.flightTime);
-    int spaces = SCREEN_WIDTH - strlen(ticketNumber) - strlen(flightGate) - 79;
+    snprintf(flightNumber, sizeof(flightNumber), "%d", ticket.flight.flightNumber);
+    printf("║  N: %d - N. Voo: %d - Portão: %s - Aeronave: %s - Data: %s - %s", ticket.ticketNumber, ticket.flight.flightNumber, ticket.flightGate, ticket.flight.plane.model, ticket.flight.flightDate, ticket.flight.flightTime);
+    int spaces = SCREEN_WIDTH - strlen(ticketNumber) - sizeof(ticket.flightGate) - strlen(flightNumber) - strlen(ticket.flight.plane.model) - strlen(ticket.flight.flightDate) - strlen(ticket.flight.flightTime) - 52;
     end_of_line(spaces);
 }
 

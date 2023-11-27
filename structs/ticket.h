@@ -5,7 +5,7 @@ struct Ticket
 {
     int ticketNumber;
     struct Flight flight;
-    int flightGate;
+    char flightGate[3];
 };
 
 struct Ticket *get_tickets(struct Flight mock_flight)
@@ -20,23 +20,23 @@ struct Ticket *get_tickets(struct Flight mock_flight)
 
     tickets[0].ticketNumber = 1;
     tickets[0].flight = mock_flight;
-    tickets[0].flightGate = 1;
+    strcpy(tickets[0].flightGate, "A");
 
     tickets[1].ticketNumber = 2;
     tickets[1].flight = mock_flight;
-    tickets[1].flightGate = 1;
+    strcpy(tickets[1].flightGate, "A");
 
     tickets[2].ticketNumber = 3;
     tickets[2].flight = mock_flight;
-    tickets[2].flightGate = 1;
+    strcpy(tickets[2].flightGate, "A");
 
     tickets[3].ticketNumber = 4;
     tickets[3].flight = mock_flight;
-    tickets[3].flightGate = 1;
+    strcpy(tickets[3].flightGate, "A");
 
     tickets[4].ticketNumber = 5;
     tickets[4].flight = mock_flight;
-    tickets[4].flightGate = 1;
+    strcpy(tickets[4].flightGate, "A");
 
     return tickets;
 }
@@ -69,7 +69,7 @@ struct Ticket *create_ticket(struct Flight *flights, int flights_size)
     ticket->flight = flights[flightIndex - 1];
 
     printf("Portão de embarque: ");
-    scanf("%d", &ticket->flightGate);
+    scanf("%s", &ticket->flightGate);
     getchar();
 
     return ticket;

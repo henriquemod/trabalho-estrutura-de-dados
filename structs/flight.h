@@ -61,10 +61,10 @@ struct Flight *create_flight(struct Plane *planes, int planes_size)
     printf("Número do voo: ");
     scanf("%d", &flight->flightNumber);
     getchar();
-    printf("Data do voo: ");
+    printf("Data do voo [dd/mm/yyyy]: ");
     scanf("%[^\n]", flight->flightDate);
     getchar();
-    printf("Horário do voo: ");
+    printf("Horário do voo [hh:mm]: ");
     scanf("%[^\n]", flight->flightTime);
     getchar();
 

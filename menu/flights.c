@@ -4,7 +4,6 @@ typedef void (*ReallocFlightCallback)(struct Flight *flight);
 void render_flights_menu(struct Plane *planes, int planes_size, struct Flight *flights, int flight_size, Callback remove_callback, ReallocFlightCallback realloc_callback)
 {
     system(CLEAR_SCREEN);
-    system(CLEAR_SCREEN);
     print_menu_with_sub_options("UniVoos - Voos", 1);
     printf("Escolha uma opção: ");
     int option;
@@ -57,18 +56,15 @@ void render_flights_menu(struct Plane *planes, int planes_size, struct Flight *f
                 flights = (struct Flight *)realloc(flights, sizeof(struct Flight) * (flight_size));
             }
             printf("Voo removido com sucesso\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
         else
         {
             system(CLEAR_SCREEN);
             printf("Voo não encontrado\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
+        printf("Pressione ENTER continuar...");
+        getchar();
+        system(CLEAR_SCREEN);
         break;
     case 4:
         system(CLEAR_SCREEN);

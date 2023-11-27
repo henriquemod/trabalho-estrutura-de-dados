@@ -39,7 +39,7 @@ void render_tickets_menu(struct Flight *flights, int flights_size, struct Ticket
         if (flights_size == 0)
         {
             printf("Não há passagens cadastradas\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
+            printf("Pressione ENTER para continuar...");
             getchar();
             break;
         }
@@ -63,18 +63,15 @@ void render_tickets_menu(struct Flight *flights, int flights_size, struct Ticket
                 tickets = (struct Ticket *)realloc(tickets, sizeof(struct Ticket) * (tickets_size));
             }
             printf("Passagem removida com sucesso\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
         else
         {
             system(CLEAR_SCREEN);
             printf("Passagem não encontrada\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
+        printf("Pressione ENTER para continuar...");
+        getchar();
+        system(CLEAR_SCREEN);
         break;
     case 4:
         system(CLEAR_SCREEN);

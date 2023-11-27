@@ -33,16 +33,16 @@ struct Plane *create_plane()
     printf("Capacidade de passageiros: ");
     scanf("%d", &plane->passengers_capacity);
     getchar();
-    printf("Comprimento: ");
+    printf("Comprimento [m]: ");
     scanf("%f", &plane->length);
     getchar();
-    printf("Altura: ");
+    printf("Altura: [m]");
     scanf("%f", &plane->height);
     getchar();
-    printf("Velocidade: ");
+    printf("Velocidade: [km/h]");
     scanf("%f", &plane->speed);
     getchar();
-    printf("Altitude: ");
+    printf("Altitude: [m]");
     scanf("%f", &plane->altitude);
     getchar();
     printf("Quantidade de motores: ");
@@ -51,8 +51,14 @@ struct Plane *create_plane()
 
     system(CLEAR_SCREEN);
     printf("Aeronave cadastrada com sucesso\n\n");
-    printf("Aeronave: %s %s\n", plane->model, plane->manufacturer);
-    printf("\n\nPressione ENTER para retornar ao continuar...");
+    printf("Aeronave: %s - %s\n", plane->model, plane->manufacturer);
+    printf("Capacidade de passageiros: %d pessoas\n", plane->passengers_capacity);
+    printf("Comprimento: %.2fm\n", plane->length);
+    printf("Altura: %.2fm\n", plane->height);
+    printf("Velocidade: %.2fkm/h\n", plane->speed);
+    printf("Altitude: %.2fm\n", plane->altitude);
+    printf("Quantidade de motores: %.2f\n\n", plane->engine);
+    printf("Pressione ENTER para continuar...");
     getchar();
 
     return plane;

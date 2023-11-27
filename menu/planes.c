@@ -15,9 +15,17 @@ void render_planes_menu(struct Plane *planes, int planes_size, Callback remove_c
         system(CLEAR_SCREEN);
         print_menu_header("Aeronaves - Lista");
         print_blank_line();
-        for (int i = 0; i < planes_size; i++)
+        if (planes_size == 0)
         {
-            print_plane_line(planes[i]);
+            print_no_results();
+        }
+        else
+        {
+
+            for (int i = 0; i < planes_size; i++)
+            {
+                print_plane_line(planes[i]);
+            }
         }
         print_bottom_menu();
         printf("Escolha uma opção: ");
@@ -48,18 +56,15 @@ void render_planes_menu(struct Plane *planes, int planes_size, Callback remove_c
                 planes = (struct Plane *)realloc(planes, sizeof(struct Plane) * (planes_size));
             }
             printf("Aeronave removida com sucesso\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
         else
         {
             system(CLEAR_SCREEN);
             printf("Aeronave não encontrada\n\n");
-            printf("\n\nPressione ENTER para retornar ao continuar...");
-            getchar();
-            system(CLEAR_SCREEN);
         }
+        printf("Pressione ENTER para continuar...");
+        getchar();
+        system(CLEAR_SCREEN);
         break;
     case 4:
         system(CLEAR_SCREEN);
