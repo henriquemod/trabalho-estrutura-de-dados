@@ -9,7 +9,9 @@
 #define MOCKED_PLANES_SIZE 3
 #define MOCKED_FLIGHTS_SIZE 5
 #define MOCKED_TICKETS_SIZE 5
-#define DEVELOPMENT true
+
+// #define DEVELOPMENT true to use mocked data
+#define DEVELOPMENT false
 
 #ifdef _WIN32
 #define CLEAR_SCREEN "cls"
