@@ -36,13 +36,13 @@ struct Plane *create_plane()
     printf("Comprimento [m]: ");
     scanf("%f", &plane->length);
     getchar();
-    printf("Altura: [m]");
+    printf("Altura [m]: ");
     scanf("%f", &plane->height);
     getchar();
-    printf("Velocidade: [km/h]");
+    printf("Velocidade [km/h]: ");
     scanf("%f", &plane->speed);
     getchar();
-    printf("Altitude: [m]");
+    printf("Altitude [m]: ");
     scanf("%f", &plane->altitude);
     getchar();
     printf("Quantidade de motores: ");

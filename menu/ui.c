@@ -203,8 +203,8 @@ void print_plane_line(struct Plane plane)
     snprintf(speed, sizeof(speed), "%.2f", plane.speed);
     snprintf(altitude, sizeof(altitude), "%.2f", plane.altitude);
 
-    printf("║\t Capacidade: %d pessoas | Velocidade: %.2fkm/h | Altitude: %.2fm", plane.passengers_capacity, plane.speed, plane.altitude);
-    spaces = SCREEN_WIDTH - 59 - strlen(passengers_capacity) - strlen(speed) - strlen(altitude);
+    printf("║  Capacidade: %d pessoas | Velocidade: %.2fkm/h | Altitude: %.2fm", plane.passengers_capacity, plane.speed, plane.altitude);
+    spaces = SCREEN_WIDTH - 57 - strlen(passengers_capacity) - strlen(speed) - strlen(altitude);
     end_of_line(spaces);
     print_blank_line();
 }
@@ -217,8 +217,8 @@ void print_flight_line(struct Flight flight)
     int spaces = SCREEN_WIDTH - strlen(flight.plane.model) - strlen(flightNumber) - 25;
     end_of_line(spaces);
 
-    printf("║\t Data: %s | Horário: %s", flight.flightDate, flight.flightTime);
-    spaces = SCREEN_WIDTH - 24 - strlen(flight.flightDate) - strlen(flight.flightTime);
+    printf("║  Data: %s | Horário: %s", flight.flightDate, flight.flightTime);
+    spaces = SCREEN_WIDTH - 22 - strlen(flight.flightDate) - strlen(flight.flightTime);
     end_of_line(spaces);
     print_blank_line();
 }

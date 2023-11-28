@@ -69,7 +69,7 @@ struct Ticket *create_ticket(struct Flight *flights, int flights_size)
     ticket->flight = flights[flightIndex - 1];
 
     printf("Portão de embarque: ");
-    scanf("%s", &ticket->flightGate);
+    scanf("%s", ticket->flightGate);
     getchar();
 
     return ticket;
